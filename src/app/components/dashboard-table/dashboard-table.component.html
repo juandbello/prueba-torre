@@ -1,0 +1,188 @@
+<!-- FILTROS -->
+<div class="flex flex-col md:flex-row gap-4 mb-6">
+
+  <!-- Categorías -->
+
+  <mat-form-field class="w-full">
+
+    <mat-label>Ordenar por</mat-label>
+
+    <mat-select [(ngModel)]="sortOption" (selectionChange)="sortProducts()">
+      <mat-option value="priceAsc">
+        Precio: Menor a mayor
+      </mat-option>
+
+      <mat-option value="priceDesc">
+        Precio: Mayor a menor
+      </mat-option>
+
+      <mat-option value="ratingAsc">
+        Calificación: Menor a mayor
+      </mat-option>
+
+      <mat-option value="ratingDesc">
+        Calificación: Mayor a menor
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+
+
+  <!-- Buscar -->
+  <mat-form-field class="w-full">
+    <mat-label>Buscar producto</mat-label>
+    <input matInput [(ngModel)]="filterText" (ngModelChange)="applyFilters()" placeholder="Ej: Perfume">
+  </mat-form-field>
+
+</div>
+
+<!-- GRID -->
+<div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 ">
+  @for (row of filteredProducts; track row.id) {
+
+  <mat-card class="
+
+    rounded-2xl
+    overflow-hidden
+    shadow-md
+    hover:shadow-xl
+    transition-all
+    duration-300
+    hover:-translate-y-1
+  ">
+
+    <!-- Imagen -->
+
+    <div class="h-56 overflow-hidden rounded-t-2xl pt-5">
+
+      <swiper-container navigation="true" pagination="true" [loop]="row.images.length > 1" class="h-full w-full">
+
+        @for(image of row.images; track image) {
+
+        <swiper-slide>
+
+          <img [src]="image" [alt]="row.title" class="
+            w-full
+            h-36
+           object-contain
+          ">
+
+        </swiper-slide>
+
+        }
+
+      </swiper-container>
+
+    </div>
+
+    <!-- Contenido -->
+    <mat-card-content class="
+    p-3
+    flex
+    flex-col
+    h-full
+  ">
+
+
+      <!-- Categoria -->
+      <div class="text-xs text-gray-500 mb-1">
+
+        {{ row.category }}
+
+      </div>
+
+      <!-- Nombre -->
+      <h2 class="text-base font-semibold mb-2 line-clamp-1">
+
+        {{ row.title }}
+
+      </h2>
+
+      <!-- Rating -->
+      <div class="flex items-center gap-1 mb-2">
+        <mat-icon class="!text-base text-yellow-500">
+          star
+        </mat-icon>
+        <span class="text-xs">
+          {{ row.rating }}
+        </span>
+
+      </div>
+
+      <!-- Precio -->
+      <div class="text-xl font-bold mb-3">
+
+        {{ row.price | currency }}
+
+      </div>
+
+
+      <!-- Estado -->
+      <div class="mb-3">
+        <span class="
+        px-2
+        py-1
+        rounded-full
+        text-[10px]
+        font-medium
+      " [ngClass]="
+      row.stock > 0
+        ? 'bg-green-100 text-green-700'
+        : 'bg-red-100 text-red-700'
+    ">
+          {{ row.stock > 0
+          ? 'Disponible ' + row.stock
+          : 'Agotado'
+          }}
+        </span>
+      </div>
+
+
+
+      <!-- Botón -->
+      <div class="mt-auto flex gap-2">
+        <button mat-stroked-button color="primary" class="
+      flex-1
+      !rounded-xl
+      !text-sm
+    " (click)="openDialog(row)">
+          Ver detalle
+        </button>
+        <button mat-flat-button color="primary" class="
+      flex-1
+      !rounded-xl
+      !text-sm
+    " (click)="addProduct(row)">
+          Agregar
+        </button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  }
+</div>
+
+<!-- EMPTY -->
+@if(filteredProducts.length === 0) {
+<div class="
+      flex
+      flex-col
+      items-center
+      justify-center
+      py-16
+      text-gray-500
+    ">
+  <mat-icon class="scale-150 mb-4">
+    search_off
+  </mat-icon>
+
+  <p class="text-lg">
+    No se encontraron resultados para:
+  </p>
+
+  <p class="font-semibold">
+    "{{ filterText }}"
+  </p>
+</div>
+}

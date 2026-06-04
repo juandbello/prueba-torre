@@ -1,0 +1,183 @@
+<div class="
+   flex flex-col h-screen p-4 overflow-hidden
+  ">
+
+  <!-- Título -->
+  <div class="mb-4">
+
+    <h2 class="text-2xl font-bold">
+
+      Carrito
+
+    </h2>
+
+    <p class="text-sm text-gray-500">
+
+      {{ productos.length }} productos
+
+    </p>
+
+  </div>
+
+  <!-- Productos -->
+  <div class="
+     max-h-[60vh] min-h-0 overflow-y-auto flex flex-col gap-3 pr-1
+    ">
+
+    @for(producto of productos; track producto.id) {
+
+    <mat-card appearance="outlined">
+
+      <mat-card-content>
+
+        <div class="flex gap-3">
+
+          <!-- Imagen -->
+          <img [src]="producto.thumbnail" class="
+        w-16
+        h-16
+        object-contain
+        rounded-lg
+        bg-white
+        shrink-0
+      ">
+
+          <!-- Info -->
+          <div class="
+      flex-1
+      min-w-0
+      flex
+      flex-col
+    ">
+
+            <!-- Nombre -->
+            <h3 class="
+        font-medium
+        text-sm
+        truncate
+      ">
+
+              {{ producto.title }}
+
+            </h3>
+
+            <!-- Precio -->
+            <p class="
+        text-primary
+        font-semibold
+        text-sm
+        mt-1
+      ">
+
+              {{ producto.price | currency }}
+
+            </p>
+
+            <!-- Acciones -->
+            <div class="
+        flex
+        items-center
+        justify-between
+        mt-3
+      ">
+
+              <!-- Cantidad -->
+              <div class="
+          flex
+          items-center
+          gap-2
+        ">
+
+                <button mat-mini-fab (click)="disminuorCantidad(producto.id)">
+
+                  <mat-icon>
+
+                    remove
+
+                  </mat-icon>
+
+                </button>
+
+                <span class="min-w-5 text-center">
+
+                  {{ producto.quantity }}
+
+                </span>
+
+                <button mat-mini-fab (click)="aumentarCantidad(producto.id)">
+
+                  <mat-icon>
+
+                    add
+
+                  </mat-icon>
+
+                </button>
+
+              </div>
+
+              <!-- Eliminar -->
+              <button mat-icon-button color="warn" (click)="quitar(producto.id)">
+
+                <mat-icon>
+
+                  delete
+
+                </mat-icon>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </mat-card-content>
+
+
+    </mat-card>
+
+    }
+
+  </div>
+
+  <!-- Footer -->
+  <div class="
+      border-t
+      pt-4
+      mt-4
+    ">
+
+    <!-- Total -->
+    <div class="
+        border-t pt-2 sticky bottom-0 bg-[#0B1114]
+      ">
+
+      <span class="text-lg font-medium">
+
+        Total
+
+      </span>
+
+      <span class="text-2xl font-bold">
+
+        {{ total | currency }}
+
+      </span>
+
+    </div>
+
+    <!-- Botón -->
+    <button mat-flat-button color="primary" class="
+        w-full
+        !rounded-xl
+      ">
+
+      Finalizar compra
+
+    </button>
+
+  </div>
+
+</div>

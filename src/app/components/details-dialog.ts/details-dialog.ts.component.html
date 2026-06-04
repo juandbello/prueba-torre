@@ -1,0 +1,425 @@
+<div class="
+  bg-[#0B1114]
+  text-white
+  rounded-2xl
+  overflow-hidden
+  max-w-5xl
+  max-h-[90vh]
+  flex
+  flex-col
+">
+
+
+
+  <!-- HEADER -->
+  <div class="
+      flex
+      items-center
+      justify-between
+      p-6
+      border-b
+      border-white/10
+    ">
+
+    <div>
+
+      <h2 class="
+          text-2xl
+          font-bold
+        ">
+
+        {{ data.title }}
+
+      </h2>
+
+      <p class="
+          text-sm
+          text-gray-400
+          mt-1
+        ">
+
+        {{ data.brand }}
+
+      </p>
+
+    </div>
+
+    <button mat-icon-button mat-dialog-close>
+
+      <mat-icon>
+
+        close
+
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+  <div class=" overflow-y-auto flex-1 "> <!-- CONTENT -->
+    <div class=" grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 ">
+
+      <div>
+
+        <div class="
+          bg-white
+          rounded-2xl
+          h-[400px]
+          flex
+          items-center
+          justify-center
+          overflow-hidden
+          mb-4
+        ">
+
+          <img [src]="selectedImage" class="
+            max-h-full
+            max-w-full
+            object-contain
+          ">
+
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="
+          flex
+          gap-3
+          overflow-x-auto
+        ">
+
+          @for(image of data.images; track image) {
+
+          <button class="
+              border
+              border-white/10
+              rounded-xl
+              overflow-hidden
+              w-20
+              h-20
+              shrink-0
+              bg-white
+            " (click)="selectedImage = image">
+
+            <img [src]="image" class="
+                w-full
+                h-full
+                object-contain
+              ">
+
+          </button>
+
+          }
+
+        </div>
+
+      </div>
+
+      <!-- INFO -->
+      <div class="
+        flex
+        flex-col
+      ">
+
+        <!-- Category -->
+        <div class="
+          text-sm
+          text-primary
+          uppercase
+          tracking-wider
+          mb-2
+        ">
+
+          {{ data.category }}
+
+        </div>
+
+        <!-- Price -->
+        <div class="
+          flex
+          items-center
+          gap-3
+          mb-4
+        ">
+
+          <span class="
+            text-4xl
+            font-bold
+          ">
+
+            {{ data.price | currency }}
+
+          </span>
+
+          <span class="
+            bg-green-500/20
+            text-green-400
+            px-3
+            py-1
+            rounded-full
+            text-sm
+            font-medium
+          ">
+
+            -{{ data.discountPercentage }}%
+
+          </span>
+
+        </div>
+
+        <!-- Rating -->
+        <div class="
+          flex
+          items-center
+          gap-2
+          mb-6
+        ">
+
+          <mat-icon class="text-yellow-400">
+
+            star
+
+          </mat-icon>
+
+          <span>
+
+            {{ data.rating }}
+
+          </span>
+
+          <span class="
+            text-gray-400
+          ">
+
+            ({{ data.reviews.length }} reviews)
+
+          </span>
+
+        </div>
+
+        <!-- Description -->
+        <p class="
+          text-gray-300
+          leading-relaxed
+          mb-6
+        ">
+
+          {{ data.description }}
+
+        </p>
+
+        <!-- Tags -->
+        <div class="
+          flex
+          flex-wrap
+          gap-2
+          mb-6
+        ">
+
+          @for(tag of data.tags; track tag) {
+
+          <span class="
+              bg-white/10
+              px-3
+              py-1
+              rounded-full
+              text-xs
+            ">
+
+            {{ tag }}
+
+          </span>
+
+          }
+
+        </div>
+
+        <!-- INFO GRID -->
+        <div class="
+          grid
+          grid-cols-2
+          gap-4
+          mb-6
+        ">
+
+          <div class="
+            bg-white/5
+            rounded-xl
+            p-4
+          ">
+
+            <p class="text-gray-400 text-sm">
+
+              SKU
+
+            </p>
+
+            <p class="font-medium">
+
+              {{ data.sku }}
+
+            </p>
+
+          </div>
+
+          <div class="
+            bg-white/5
+            rounded-xl
+            p-4
+          ">
+
+            <p class="text-gray-400 text-sm">
+
+              Stock
+
+            </p>
+
+            <p class="font-medium">
+
+              {{ data.stock }}
+
+            </p>
+
+          </div>
+
+          <div class="
+            bg-white/5
+            rounded-xl
+            p-4
+          ">
+
+            <p class="text-gray-400 text-sm">
+
+              Peso
+
+            </p>
+
+            <p class="font-medium">
+
+              {{ data.weight }}g
+
+            </p>
+
+          </div>
+
+          <div class="
+            bg-white/5
+            rounded-xl
+            p-4
+          ">
+
+            <p class="text-gray-400 text-sm">
+
+              Garantia
+
+            </p>
+
+            <p class="font-medium">
+
+              {{ data.warrantyInformation }}
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="
+      border-t
+      border-white/10
+      p-6
+    ">
+
+      <h3 class="
+        text-xl
+        font-semibold
+        mb-4
+      ">
+
+        Opiniones
+
+      </h3>
+
+      <div class="
+        flex
+        flex-col
+        gap-4
+      ">
+
+        @for(review of data.reviews; track review) {
+
+        <div class="
+            bg-white/5
+            rounded-xl
+            p-4
+          ">
+
+          <div class="
+              flex
+              items-center
+              justify-between
+              mb-2
+            ">
+
+            <div>
+
+              <p class="font-medium">
+
+                {{ review.reviewerName }}
+
+              </p>
+
+              <p class="
+                  text-xs
+                  text-gray-400
+                ">
+
+                {{ review.date | date }}
+
+              </p>
+
+            </div>
+
+            <div class="
+                flex
+                items-center
+                gap-1
+              ">
+
+              <mat-icon class="
+                  text-yellow-400
+                  text-sm
+                ">
+
+                star
+
+              </mat-icon>
+
+              {{ review.rating }}
+
+            </div>
+
+          </div>
+
+          <p class="
+              text-gray-300
+            ">
+
+            {{ review.comment }}
+
+          </p>
+
+        </div>
+
+        }
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,23 @@
+<mat-sidenav-container class="admin-container">
+
+
+  <!-- Main content -->
+  <mat-sidenav-content class="admin-content">
+    <!-- Navbar -->
+    <mat-toolbar class="admin-toolbar m-4">
+      <button mat-icon-button class="ml-auto pt-4" (click)="drawerService.toggle()">
+
+        <mat-icon [matBadge]="totalItems" matBadgeSize="large">shopping_cart</mat-icon>
+      </button>
+    </mat-toolbar>
+    <!-- Main router content -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer -->
+    <mat-toolbar color="accent" class="admin-footer">
+      <span>© 2026 Juan D Bello - Todos los derechos reservados</span>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
